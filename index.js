@@ -39,6 +39,7 @@ const getAlunos = (listaAlunos) => {
         alunoInfo.nome = aluno.nome;
         alunoInfo.matricula = aluno.matricula;
         alunoInfo.sexo = aluno.sexo;
+        alunoInfo.curso = aluno.curso[0].sigla
         alunoInfo.status = aluno.status;
 
         alunosArray.push(alunoInfo);
@@ -81,22 +82,66 @@ const getAlunosMatricula = (numeroMatricula,listaAlunos) => {
 
 // console.log(getAlunosMatricula("20151001001", alunos.alunos));
 
-//Função para retornar o json comt todos os alunos de acordo com o curso
+//Função para retornar o json com todos os alunos de acordo com o curso
 const getAlunosCurso = (curso, listaAlunos) => {
+    const cursoUpper = curso.toUpperCase();
     const alunoJson = {};
     const alunosArray = [];
     let status = false;
  
     listaAlunos.forEach(aluno => {
-        if(aluno.curso.sigla == curso.toUpperCase){
-            alunosArray.push(aluno);
+        let alunos = {};
+        if(aluno.curso[0].sigla.toUpperCase() == cursoUpper){
+            alunos = aluno
+            alunosArray.push(alunos);
             status = true;
+            
         }
       
 
     })
+
+    if(status){
+        alunoJson.aluno = alunosArray
+        return alunoJson
+    }else{
+        return status;
+    }
+    
+}
+
+// console.log(getAlunosCurso("RDS", alunos.alunos));
+
+//Função para retornar o json com todos os alunos de acordo com status
+
+const getAlunosStatus = (statusAluno, listaAlunos) => {
+    const statusAlunoUpper = statusAluno.toUpperCase()
+    const alunoJson = {};
+    const alunosArray = [];
+    let status = false;
+ 
+    listaAlunos.forEach(aluno => {
+        let alunos = {};
+        if(aluno.status.toUpperCase() == statusAlunoUpper){
+            alunos = aluno;
+            alunosArray.push(aluno);
+            status = true;
+            
+        }
+      
+
+    })
+
     alunoJson.aluno = alunosArray
     return alunoJson
 }
 
-console.log(getAlunosCurso("RDS", alunos.alunos));
+//  console.log(getAlunosStatus("FinalizadO", alunos.alunos));
+ 
+module.exports = {
+    getCursos,
+    getAlunos,
+    getAlunosMatricula,
+    getAlunosCurso,
+    getAlunosStatus
+}
