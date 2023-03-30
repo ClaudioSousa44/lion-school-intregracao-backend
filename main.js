@@ -51,14 +51,56 @@ app.get('/v1/lion-school/cursos', cors(), async (request,response,next) => {
 });
 
 app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
-    let alunos = func.getAlunos(listAlunos.alunos);
+    // let alunos = func.getAlunos(listAlunos.alunos);
+    let alunos 
+    let status = request.query.status;
+    let curso = request.query.curso;
+    let statusCode;
+    let dadosCode = {};
 
-    if(alunos){
-        response.status(200);
-        response.json(alunos);
+    if(status != undefined || status != ""){
+        if(!isNaN(status) ){
+            statusCode = 400;
+            dadosCode.message = 'Status inválido';
+        }else{
+             alunos = func.getAlunosStatus(status, listAlunos.alunos);
+            if(alunos){
+                statusCode = 200;
+                dadosCode = alunos;
+            }else{
+                statusCode = 404;
+                dadosCode.message = 'Curso inválido';
+            }
+        }
+    }else if(curso != undefined || curso != "" ){
+        if(!isNaN(curso) ){
+            statusCode = 400;
+            dadosCode.message = 'Curso inválido';
+        }else{
+            let alunos = func.getAlunosCurso(curso, listAlunos.alunos);
+    
+            if(alunos){
+                statusCode = 200;
+                dadosCode = alunos;
+            }else{
+                statusCode = 404;
+                dadosCode.message = 'Curso inválido';
+            }
+        }
     }else{
-        response.status(500);
+        alunos = func.getAlunos(listAlunos.alunos);
+        if(alunos){
+            statusCode = 200;
+            dadosCode = alunos;
+        }else{
+            statusCode = 404;
+            dadosCode.message = 'Aluno inválido';
+        }
     }
+
+    response.status(statusCode);
+    response.json(dadosCode);
+    
 });
 
 app.get('/v1/lion-school/alunos/:matricula', cors(), async(request, response, next) => {
@@ -87,56 +129,9 @@ app.get('/v1/lion-school/alunos/:matricula', cors(), async(request, response, ne
     
 })
 
-app.get('/v1/lion-school/curso', cors(), async (request,response, next) => {
-    let curso = request.query.curso;
-    let statusCode;
-    let dadosCode = {};
+const port = process.env.PORT || 8080;
 
-    if(curso == '' || curso == undefined || !isNaN(curso) ){
-        statusCode = 400;
-        dadosCode.message = 'Curso inválida';
-    }else{
-        let alunos = func.getAlunosCurso(curso, listAlunos.alunos);
-
-        if(alunos){
-            statusCode = 200;
-            dadosCode = alunos;
-        }else{
-            statusCode = 404;
-            dadosCode.message = 'Curso inválida';
-        }
-    }
-
-    response.status(statusCode);
-    response.json(dadosCode);
-});
-
-app.get('/v1/lion-school/status', cors(), async(request, response, next) => {
-    let status = request.query.status;
-    let statusCode;
-    let dadosCode = {};
-
-    if(status == '' || status == undefined ||!isNaN(status) ){
-        statusCode = 400;
-        dadosCode.message = 'Curso inválida';
-    }else{
-        let alunos = func.getAlunosStatus(status, listAlunos.alunos);
-        if(alunos){
-            statusCode = 200;
-            dadosCode = alunos;
-        }else{
-            statusCode = 404;
-            dadosCode.message = 'Curso inválida';
-        }
-    }
-    
-    response.status(statusCode);
-    response.json(dadosCode);
-
-})
-
-
-app.listen(8080, () => {
+app.listen(port, () => {
     console.log('Servidor rodando!');
     
 })
