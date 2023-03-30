@@ -58,7 +58,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
     let statusCode;
     let dadosCode = {};
 
-    if(status != undefined || status != ""){
+    if(status != undefined ){
         if(!isNaN(status) ){
             statusCode = 400;
             dadosCode.message = 'Status inválido';
@@ -72,7 +72,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode.message = 'Curso inválido';
             }
         }
-    }else if(curso != undefined || curso != "" ){
+    }else if(curso != undefined  ){
         if(!isNaN(curso) ){
             statusCode = 400;
             dadosCode.message = 'Curso inválido';
