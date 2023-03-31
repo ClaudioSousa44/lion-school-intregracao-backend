@@ -53,11 +53,18 @@ const getAlunos = (listaAlunos) => {
         return status;    
     }
    
-  
-    
 }
-
 // console.log(getAlunos(alunos.alunos));
+
+// Função para pegar as iniciais
+const getInitials = (nomeMateria) => {
+    const materias = nomeMateria.split(' ');
+    const initials = materias.map(materia => materia.charAt(0).toUpperCase());
+    return initials.join('')
+}
+// console.log(getInitials('Sistemas Operacionais'));
+
+
 
 //Função para retornar o json com todos os alunos filtrando pela matricula
 const getAlunosMatricula = (numeroMatricula,listaAlunos) => {
@@ -67,6 +74,9 @@ const getAlunosMatricula = (numeroMatricula,listaAlunos) => {
     listaAlunos.forEach(aluno => {
         if(aluno.matricula == numeroMatricula){
             alunosJson.aluno = aluno
+            aluno.curso[0].disciplinas.forEach(disciplina => {
+                disciplina.sigla = getInitials(disciplina.nome)
+            })
             status = true;
         }
         

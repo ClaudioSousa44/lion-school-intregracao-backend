@@ -131,7 +131,7 @@ app.get('/v1/lion-school/alunos/:matricula', cors(), async(request, response, ne
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
+app.listen(8080, () => {
     console.log('Servidor rodando!');
     
 })
