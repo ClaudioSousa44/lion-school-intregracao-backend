@@ -98,10 +98,16 @@ const getAlunosCurso = (curso, listaAlunos) => {
     const alunoJson = {};
     const alunosArray = [];
     let status = false;
+
  
     listaAlunos.forEach(aluno => {
         let alunos = {};
         if(aluno.curso[0].sigla.toUpperCase() == cursoUpper){
+            if(cursoUpper == "DS"){
+                alunoJson.NomeCurso = "Desenvolvimento de Sistemas"
+            }else{
+                alunoJson.NomeCurso = "Redes de Computadores"
+            }
             alunos = aluno
             alunosArray.push(alunos);
             status = true;
@@ -120,7 +126,7 @@ const getAlunosCurso = (curso, listaAlunos) => {
     
 }
 
-// console.log(getAlunosCurso("RDS", alunos.alunos));
+console.log(getAlunosCurso("DS", alunos.alunos));
 
 //Função para retornar o json com todos os alunos de acordo com status
 
