@@ -18,6 +18,7 @@ const listCursos = require('./jsons/cursos.js');
 const func = require('./index.js');
 const { response } = require('express');
 const { request } = require('http');
+const { stat } = require('fs');
 
 
 const app = express();
@@ -58,7 +59,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
     let statusCode;
     let dadosCode = {};
 
-    if(status != undefined ){
+    if(status != undefined && curso == undefined){
         if(!isNaN(status) ){
             statusCode = 400;
             dadosCode.message = 'Status inválido';
@@ -72,12 +73,12 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode.message = 'Curso inválido';
             }
         }
-    }else if(curso != undefined  ){
+    }else if(curso != undefined  && status == undefined){
         if(!isNaN(curso) ){
             statusCode = 400;
             dadosCode.message = 'Curso inválido';
         }else{
-            let alunos = func.getAlunosCurso(curso, listAlunos.alunos);
+             alunos = func.getAlunosCurso(curso, listAlunos.alunos);
     
             if(alunos){
                 statusCode = 200;
@@ -87,7 +88,24 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode.message = 'Curso inválido';
             }
         }
-    }else{
+    }else if(curso != undefined && status != undefined){
+        if(!isNaN(curso) || !isNaN(status)){
+            statusCode = 400;
+            dadosCode.message = 'Curso ou Status inválidos';
+        }else{
+           let  alunosCurso =  func.getAlunosCurso(curso, listAlunos.alunos);
+            alunos = func.getAlunosStatus(status, alunosCurso.aluno);
+            if(alunos){
+                statusCode = 200;
+                dadosCode = alunos;
+            }else{
+                statusCode = 404;
+                dadosCode.message = 'Curso inválido';
+            }
+
+        }
+    }
+    else{
         alunos = func.getAlunos(listAlunos.alunos);
         if(alunos){
             statusCode = 200;

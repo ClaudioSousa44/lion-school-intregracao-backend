@@ -58,11 +58,13 @@ const getAlunos = (listaAlunos) => {
 
 // Função para pegar as iniciais
 const getInitials = (nomeMateria) => {
-    const materias = nomeMateria.split(' ');
+    // const materiass = nomeMateria.split(' ');
+    let materias = nomeMateria.replace(/\s(de|da|a|das)\s/g, ' ');
+    materias = materias.split(' ');
     const initials = materias.map(materia => materia.charAt(0).toUpperCase());
     return initials.join('')
 }
-// console.log(getInitials('Sistemas Operacionais'));
+// console.log(getInitials('Banco de dados'));
 
 
 
@@ -126,7 +128,7 @@ const getAlunosCurso = (curso, listaAlunos) => {
     
 }
 
-console.log(getAlunosCurso("DS", alunos.alunos));
+// console.log(getAlunosCurso("DS", alunos.alunos));
 
 //Função para retornar o json com todos os alunos de acordo com status
 
