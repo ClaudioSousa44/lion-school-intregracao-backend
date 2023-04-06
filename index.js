@@ -106,9 +106,9 @@ const getAlunosCurso = (curso, listaAlunos) => {
         let alunos = {};
         if(aluno.curso[0].sigla.toUpperCase() == cursoUpper){
             if(cursoUpper == "DS"){
-                alunoJson.NomeCurso = "Desenvolvimento de Sistemas"
+                alunoJson.NomeCurso = "Técnico em Desenvolvimento de Sistemas"
             }else{
-                alunoJson.NomeCurso = "Redes de Computadores"
+                alunoJson.NomeCurso = "Técnico em Redes de Computadores"
             }
             alunos = aluno
             alunosArray.push(alunos);
