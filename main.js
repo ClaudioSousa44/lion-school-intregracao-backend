@@ -70,7 +70,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode = alunos;
             }else{
                 statusCode = 404;
-                dadosCode.message = 'Curso inválido';
+                dadosCode.message = 'Status inválido';
             }
         }
     }else if(curso != undefined  && status == undefined){
@@ -100,7 +100,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode = alunos;
             }else{
                 statusCode = 404;
-                dadosCode.message = 'Curso inválido';
+                dadosCode.message = 'Curso ou Status inválido';
             }
 
         }
