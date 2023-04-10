@@ -58,7 +58,8 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
     let curso = request.query.curso;
     let statusCode;
     let dadosCode = {};
-
+    
+    //filtrar por status
     if(status != undefined && curso == undefined){
         if(!isNaN(status) ){
             statusCode = 400;
@@ -73,6 +74,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode.message = 'Status inválido';
             }
         }
+    //filtrar por curso
     }else if(curso != undefined  && status == undefined){
         if(!isNaN(curso) ){
             statusCode = 400;
@@ -88,6 +90,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
                 dadosCode.message = 'Curso inválido';
             }
         }
+    //filtrar por curso e status
     }else if(curso != undefined && status != undefined){
         if(!isNaN(curso) || !isNaN(status)){
             statusCode = 400;
@@ -105,6 +108,7 @@ app.get('/v1/lion-school/alunos', cors(), async (request, response, next) => {
 
         }
     }
+    //trazer todos alunos
     else{
         alunos = func.getAlunos(listAlunos.alunos);
         if(alunos){
