@@ -12,6 +12,7 @@ const getCursos = (listaCursos) => {
         const opcoesCursos = {};
         opcoesCursos.sigla = curso.sigla;
         opcoesCursos.icone = curso.icone;
+        opcoesCursos.nome = curso.nome;
         cursosArray.push(opcoesCursos);
         status = true;
     });
@@ -25,7 +26,7 @@ const getCursos = (listaCursos) => {
     
 }
 
-// console.log(getCursos(cursos.cursos))
+console.log(getCursos(cursos.cursos))
 
 //Função para retornar o json com todos os alunos
 const getAlunos = (listaAlunos) => {
