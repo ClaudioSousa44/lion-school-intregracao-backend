@@ -13,6 +13,7 @@ const getCursos = (listaCursos) => {
         opcoesCursos.sigla = curso.sigla;
         opcoesCursos.icone = curso.icone;
         opcoesCursos.nome = curso.nome;
+        opcoesCursos.carga = curso.carga
         cursosArray.push(opcoesCursos);
         status = true;
     });
